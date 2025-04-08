@@ -1,0 +1,68 @@
+<mvc:View controllerName="sample.controller.Test"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page">
+   <subHeader>
+            <Bar>
+            <contentLeft>
+                <Text id="greetingText"  />
+                <Text id="Text"></Text>
+            </contentLeft>
+            <contentMiddle> 
+                <SearchField search="onSearch" suggest="onSuggest" enableSuggestions="true" placeholder="Enter Your FirstName" width="500px"></SearchField>
+            </contentMiddle>
+    </Bar>
+    </subHeader>
+      <Table id="employeeTable" >
+    <columns>
+        <Column>
+            <Text text="EmpId"/>
+        </Column>
+        <Column>
+            <Text text="FirstName"/>
+        </Column>
+        <Column>
+            <Text text="Email"/>
+        </Column>
+        <Column>
+            <Text text="Phone"/>
+        </Column>
+           <Column>
+            <Text text="BloodGroup"/>
+        </Column>
+        <Column> 
+            <Text text="Department"/>
+        </Column>
+        <Column>
+            <Text text="Position"/>
+        </Column>
+         <Column>
+            <Text text="Salary"/>
+        </Column>
+        <Column>
+            <Text text="JoiningDate"/>
+        </Column>
+    </columns>
+    <items>
+    <GroupHeaderListItem title="{Department}" />
+        <ColumnListItem type="Active" press="OnNavigate">
+            <cells>
+                <Text text="{ID}"/>
+                <Text text="{FirstName} {LastName}"/>
+                <Text text="{Email}"/>
+                <Text text="{Phone}"/>
+                <Text text="{BloodGroup}"/>
+                <Text text="{Department}"/>
+                <Text text="{Position}"/>
+                <Text text="{Salary}"/>
+                <!-- <Text text="{path: 'JoiningDate', formatter: '.formatter.formatJoiningDate'}" />  -->
+                <Text text="{path: 'JoiningDate', formatter: '.formatJoiningDate'}" />
+            </cells>
+        </ColumnListItem>
+    </items>
+</Table>
+    </Page>
+</mvc:View>
+
+
+
