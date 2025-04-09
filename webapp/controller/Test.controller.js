@@ -17,7 +17,7 @@ sap.ui.define([
             var sGreeting = oResourceBundle.getText("greeting");
             that.byId("greetingText").setText(sGreeting);
 
-            // Fetching the data without binding in view using id's 
+            // Fetching the data without binding in view only using id's 
             var oUnique = that.getOwnerComponent().getModel();
             var sDepartment = "SAP UI5"; 
             var oDepartmentFilter = new Filter("Department", FilterOperator.EQ, sDepartment);
