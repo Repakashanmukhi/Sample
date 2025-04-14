@@ -1,7 +1,6 @@
 <mvc:View controllerName="sample.controller.Test"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    
     <Page id="page">
         <subHeader>
             <Bar>
@@ -9,10 +8,12 @@
                     <Text id="greetingText" />
                     <Text id="Text"/>
                 </contentLeft>
+                <contentRight>
+                    <Button press="Busy" text="Busy Dialog"></Button>  
+                </contentRight>
             </Bar>
         </subHeader>
-        
-        <Table id="employeeTable">
+        <Table id="employeeTable" items="{/event}">
             <columns>
                 <Column> <Text text="EmpId"/> </Column>
                 <Column> <Text text="FirstName"/> </Column>
@@ -24,7 +25,33 @@
                 <Column> <Text text="Salary"/> </Column>
                 <Column> <Text text="JoiningDate"/> </Column>
             </columns>
+            <items>
+                    <ColumnListItem type="Active" id="employeeRow" press="OnNavigate">
+                        <cells>
+                            <Text text="{ID}"/>
+                            <Text text="{FirstName} {LastName}"/>
+                            <Text text="{Email}"/>
+                            <Text text="{Phone}"/>
+                            <Text text="{BloodGroup}"/>
+                            <Text text="{Department}"/>
+                            <Text text="{Position}"/>
+                            <Text text="{Salary}"/>
+                            <!-- <Text text="{path: 'JoiningDate', formatter: '.formatter.formatJoiningDate'}" />  -->
+                            <Text text="{path: 'JoiningDate', formatter: '.formatJoiningDate'}" />  
+                        </cells>
+                    </ColumnListItem>
+                </items>
         </Table>
+        <VBox class="sapUiSmallMargin">
+        <Label text="Input 1" />
+        <Input id="input1" placeholder="Enter Input 1" liveChange="onInputChange" type="Number" />
+        <Label text="Input 2" />
+        <Input id="input2" placeholder="Enter Input 2" liveChange="onInputChange" type="Number" />
+        <Label text="Input 3" />
+        <Input id="input3" placeholder="Enter Input 3" liveChange="onInputChange" type="Number" />
+        <!-- <Button text="Submit" press="onSubmit" />
+        <Text id="resultText" text="" class="sapUiSmallMarginTop" /> -->
+        </VBox>
     </Page>
 </mvc:View>
 
