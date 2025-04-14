@@ -16,10 +16,8 @@ sap.ui.define([
             that.byId("Text").setText(sTitle);
             var sGreeting = oResourceModel.getText("greeting");
             that.byId("greetingText").setText(sGreeting);
-
             var oModel = that.getOwnerComponent().getModel();
             var oFilter = new Filter("Department", FilterOperator.EQ, "SAP UI5");
-
             oModel.read("/EmployeeInfo", {
                 filters: [oFilter],
                 success: function (oData) {
@@ -31,7 +29,6 @@ sap.ui.define([
                 }
             });
         },
-
         formatJoiningDate: function (sDate) {
             if (sDate) {
                 var oDate = new Date(sDate);
@@ -112,4 +109,3 @@ sap.ui.define([
         // } 
     });
 });
-
