@@ -1,17 +1,16 @@
-<mvc:View controllerName="sample.controller.Test1"
+<mvc:View
+    controllerName="sample.controller.Test1"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout">
+
     <Page id="pages">
-    <subHeader>
-        <Bar >
-            <contentLeft>
-                <Title text="Employee Emergency Contact" ></Title>
-            </contentLeft>
-            <contentRight>
-                <Button icon="sap-icon://add" press="onOpenDialog"></Button>
-                <Button icon="sap-icon://decline" press="onClose"></Button>
-            </contentRight>
-        </Bar>
-    </subHeader>
+        <content>
+            <VBox>
+                <Text id="containerData" text="Select a Button to view Employee Data."></Text>
+                <Button id="button1" text="Employee Information" press="onEmployeInfo"/>
+                <Button id="button2" text="Employee Emergency Contact" press="onEmergencyContact"/>
+            </VBox>
+        </content>
     </Page>
 </mvc:View>

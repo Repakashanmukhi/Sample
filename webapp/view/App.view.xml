@@ -1,14 +1,9 @@
  <mvc:View controllerName="sample.controller.App"
     displayBlock="true"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns:f="sap.f"
     xmlns="sap.m">
     <App id="app">
-         <f:FlexibleColumnLayout id="FCL">
-            <f:beginColumnPages>
-                <mvc:XMLView id="startView" async="true" viewName="sample.view.Test"/>
-            </f:beginColumnPages>
-        </f:FlexibleColumnLayout>
+        
     </App>
 </mvc:View> 
 

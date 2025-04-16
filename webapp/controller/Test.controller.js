@@ -9,12 +9,13 @@ sap.ui.define([
         onInit: function () { 
             that = this;
             that.oEventBus = that.getOwnerComponent().getEventBus();
-            // Initialize the controller 
             var oResourceModel = this.getOwnerComponent().getModel("i18n").getResourceBundle(); 
             var sTitle = oResourceModel.getText("title"); 
             this.byId("Text").setText(sTitle); 
+
+
             var oModel = that.getOwnerComponent().getModel();
-            oModel.read("/EmployeeInfo", {
+            oModel.read("/EmployeeInfo", {  
                 success: function (oData) {
                     var oEmployeeModel = new sap.ui.model.json.JSONModel({ event: oData.results });
                     that.byId("employeeList").setModel(oEmployeeModel);
@@ -24,12 +25,16 @@ sap.ui.define([
                 }
             }); 
         }, 
-        onNavigation: function(oEvent){
-            var Model= that.getOwnerComponent().getModel();
-            var oItem= oEvent.getSource().getBindingContext().getProperty();
-            that.oEventBus.publish("flexible",setView2,oItem);
+        onNavigation: function (oEvent) {
+            var oSelectedItem = oEvent.getParameter("listItem");
+            var oContext = oSelectedItem.getBindingContext();
+            var oData = oContext.getObject();
+            var employeeId = oData.ID;
+            this.getOwnerComponent().getRouter().navTo("Test1", {
+                employeeId: employeeId
+            });
         }
-        
     }); 
 }); 
-  
+
+

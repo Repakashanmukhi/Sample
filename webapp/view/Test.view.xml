@@ -7,31 +7,17 @@
                 <contentLeft>
                     <Text id="Text"/>
                 </contentLeft>
-                <contentRight>
-                    <Button press="Busy" text="Busy Dialog"></Button>  
-                </contentRight>
             </Bar>
         </subHeader>
-       <List id="employeeList" items="{/event}"> 
-        <items> 
+    <List id="employeeList" items="{/event}" itemPress="onNavigation">
+        <items>
             <StandardListItem 
                 title="{FirstName} {LastName}" 
-                description="{Email}"  
-                type="Active" 
-                press="OnNavigate"> 
+                description="{Email}" 
+                type="Navigation" >
             </StandardListItem> 
         </items> 
-    </List> 
-      
-
-        <!-- <VBox class="sapUiSmallMargin">
-        <Label text="Input 1" />
-        <Input id="input1" placeholder="Enter Input 1" liveChange="onInputChange" type="Number" />
-        <Label text="Input 2" />
-        <Input id="input2" placeholder="Enter Input 2" liveChange="onInputChange" type="Number" />
-        <Label text="Input 3" />
-        <Input id="input3" placeholder="Enter Input 3" liveChange="onInputChange" type="Number" />
-        </VBox> -->
+    </List>
     </Page>
 </mvc:View>
 

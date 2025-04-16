@@ -90,10 +90,19 @@
       },
       "routes": [
         {
-          "name": "RouteTest",
-          "pattern": ":?query:",
+          "name": "Test",
+          "pattern": "",
+          "view": "Test",
           "target": [
             "TargetTest"
+          ]
+        },
+        {
+          "name": "Test1",
+          "pattern": "Test1/{employeeId}",
+          "view": "Test1",
+          "target": [
+            "TargetTest1"
           ]
         }
       ],
@@ -101,6 +110,10 @@
         "TargetTest": {
           "id": "Test",
           "name": "Test"
+        },
+        "TargetTest1": {
+          "id": "Test1",
+          "name": "Test1"
         }
       }
     },
