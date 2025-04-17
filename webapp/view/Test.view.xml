@@ -18,6 +18,15 @@
             </StandardListItem> 
         </items> 
     </List>
+
+    <VBox class="sapUiSmallMargin">
+        <Label text="Input 1" />
+        <Input id="input1" placeholder="Enter Input 1" liveChange="onInputChange" type="Number" />
+        <Label text="Input 2" />
+        <Input id="input2" placeholder="Enter Input 2" liveChange="onInputChange" type="Number" />
+        <Label text="Input 3" />
+        <Input id="input3" placeholder="Enter Input 3" liveChange="onInputChange" type="Number" />
+        </VBox>
     </Page>
 </mvc:View>
 

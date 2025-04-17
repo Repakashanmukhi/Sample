@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" 
+xmlns="sap.m">
+  <Dialog id="PersonalInfo" title="Update Details">
+    <VBox class="sapUiTinyMargin">
+      <Label text="Contact Name" />
+      <Input value="{formData>/ContactName}" width="250px" editable="false"/>
+      
+      <Label text="Phone"/>
+      <Input value="{formData>/ContactPhone}" width="250px" editable="false"/>
+      
+      <Label text="Contact Email"/>
+      <Input value="{formData>/ContactEmail}" width="250px" editable="false"/>
+      
+      <Label text="Relationship"/>
+      <Input value="{formData>/Relationship}" width="250px" editable="false"/>
+    </VBox>
+    
+    <footer>
+      <Toolbar>
+        <ToolbarSpacer/>
+        <Button text="Close" press="onCancleDialog"></Button>
+      </Toolbar>
+    </footer>
+  </Dialog>
+</core:FragmentDefinition>
