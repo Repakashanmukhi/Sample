@@ -14,7 +14,6 @@ sap.ui.define([
             var oRoute = oRouter.getRoute("Test1");
             oRoute.attachPatternMatched(this._onRouteMatched, this);
         },
-
         _onRouteMatched: function (oEvent) {
             var oArgs = oEvent.getParameter("arguments");
             var employeeId = oArgs.employeeId;
