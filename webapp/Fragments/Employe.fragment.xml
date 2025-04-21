@@ -1,19 +1,29 @@
 <core:FragmentDefinition xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" 
-xmlns="sap.m">
-  <Dialog id="PersonalInfo" title="Update Details">
-    <VBox class="sapUiTinyMargin">
+    xmlns="sap.m">
+  <Dialog id="PersonalInfo" title="Employee Details">
+    <f:SimpleForm class="sapUiTinyMargin">
+      <!-- Employee Information -->
+      <Label text="Employee Name" />
+      <Input value="{employeeDetails>/FirstName}" width="250px" editable="false"/>
+      <Label text="Employee Email"/>
+      <Input value="{employeeDetails>/Email}" width="250px" editable="false"/>
+      <Label text="Employee Phone"/>
+      <Input value="{employeeDetails>/Phone}" width="250px" editable="false"/>
+      <Label text="Employee Department"/>
+      <Input value="{employeeDetails>/Department}" width="250px" editable="false"/>
+      <Label text="Employee Position"/>
+      <Input value="{employeeDetails>/Position}" width="250px" editable="false"/>
+      <Label text="Employee Salary"/>
+      <Input value="{employeeDetails>/Salary}" width="250px" editable="false"/>
+      
+      <!-- Emergency Contact Information -->
       <Label text="Contact Name" />
-      <Input value="{formData>/ContactName}" width="250px" editable="false"/>
-      
-      <Label text="Phone"/>
-      <Input value="{formData>/ContactPhone}" width="250px" editable="false"/>
-      
-      <Label text="Contact Email"/>
-      <Input value="{formData>/ContactEmail}" width="250px" editable="false"/>
-      
+      <Input value="{emergencyContact>/ContactName}" width="250px" editable="false"/>
+      <Label text="Contact Phone"/>
+      <Input value="{emergencyContact>/ContactPhone}" width="250px" editable="false"/>
       <Label text="Relationship"/>
-      <Input value="{formData>/Relationship}" width="250px" editable="false"/>
-    </VBox>
+      <Input value="{emergencyContact>/Relationship}" width="250px" editable="false"/>
+    </f:SimpleForm>
     
     <footer>
       <Toolbar>
@@ -23,3 +33,7 @@ xmlns="sap.m">
     </footer>
   </Dialog>
 </core:FragmentDefinition>
+
+
+
+

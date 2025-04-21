@@ -7,9 +7,7 @@
     <Page id="pages">
         <content>
             <VBox>
-                <Text id="containerData" text="Select a Button to view Employee Data."></Text>
-                <Button id="button1" text="Employee Information" press="onEmployeInfo"/>
-                <Button id="button2" text="Employee Emergency Contact" press="onEmergencyContact"/>
+                <Button id="button1" text="Employee Information" press="onEmployeeInfo"/>
             </VBox>
         </content>
     </Page>
