@@ -48,7 +48,7 @@
                     break;
                 case "20000":
                     aFilters.push(new Filter("Salary", FilterOperator.GT, 20000));
-                    break;
+                    break; 
                 default:
                     break;
             }
@@ -58,7 +58,7 @@
             oBinding.filter(aFilters);
         },
         
-        onNavigation: function (oEvent) {
+        onNavigation: function (oEvent) {   
             var oSelectedItem = oEvent.getParameter("listItem");
             var oContext = oSelectedItem.getBindingContext();
             var oData = oContext.getObject();
