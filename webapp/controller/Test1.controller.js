@@ -18,7 +18,6 @@ sap.ui.define([
             var oArgs = oEvent.getParameter("arguments");
             var employeeId = oArgs.employeeId;
             var oModel = this.getOwnerComponent().getModel();
-
             oModel.read("/EmployeeInfo", {
                 success: function (oData) {
                     var oEmployee = oData.results.find(emp => emp.ID === employeeId);
