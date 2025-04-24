@@ -31,123 +31,51 @@ sap.ui.define([
             });
         },
         onEmployeeInfo: function () {
+            var that = this;
             if (!that.PersonalInfo) {
                 that.PersonalInfo = sap.ui.xmlfragment("sample.Fragments.Employe", that);
-                that.getView().addDependent(that.PersonalInfo); 
+                that.getView().addDependent(that.PersonalInfo);
             }
             var oEmployeeModel = this.getView().getModel("employeeDetails");
             var employeeEmail = oEmployeeModel.getProperty("/Email");
             var oModel = this.getOwnerComponent().getModel();
-            var oEmergencyContactModel = new JSONModel();
             oModel.read("/EmployeeInfoEmergencyContact", {
-                filters: [new Filter("ContactEmail", FilterOperator.EQ, employeeEmail)],
+                filters: [new sap.ui.model.Filter("ContactEmail", sap.ui.model.FilterOperator.EQ, employeeEmail)],
                 success: function (oData) {
-                        var oEmergencyContact = oData.results[0];
-                        oEmergencyContactModel.setData(oEmergencyContact);
-                        var combinedData =new JSONModel({
-                            employee: oEmployeeModel.getData(),
-                            oEmergencyContact: oEmergencyContactModel.getData()
-                        })
-                        var combinedDataModel = combinedData;
-                        that.getView().setModel(combinedDataModel, "combinedData");
+                    var contacts = oData.results;
+                    that.getView().setModel(new sap.ui.model.json.JSONModel(contacts), "emergencyContacts");
+                    that.getView().setModel(new sap.ui.model.json.JSONModel({}), "emergencyContact");
+                    var combinedData = {
+                        employee: oEmployeeModel.getData(),
+                        oEmergencyContact: {}
+                    };
+                    that.getView().setModel(new sap.ui.model.json.JSONModel(combinedData), "combinedData");
+                    that.PersonalInfo.open();
                 },
-                error: function (oError) {
-                    console.log("Error fetching emergency contact: ", oError);
+                error: function (err) {
+                    console.log("Error fetching emergency contacts: ", err);
                 }
             });
-            that.PersonalInfo.setModel(oEmployeeModel, "employeeDetails");
-            that.PersonalInfo.setModel(oEmergencyContactModel, "emergencyContact");
-            that.PersonalInfo.open();
+        },
+        onContactSelectionChange: function (oEvent) {
+            var selected = oEvent.getParameter("selectedItem").getBindingContext("emergencyContacts").getObject();
+            var oContactModel = this.getView().getModel("emergencyContact");
+                oContactModel.setData(selected);  
+            var employee = this.getView().getModel("employeeDetails").getData();
+            var combined = {
+                employee: employee,
+                oEmergencyContact: selected
+            };
+            this.getView().setModel(new sap.ui.model.json.JSONModel(combined), "combinedData");
         },
         onCancleDialog: function () {
-            if (that.PersonalInfo) {
-                that.PersonalInfo.close();
+            if (this.PersonalInfo) {
+                this.PersonalInfo.close();
             }
         }
     });
 });
 
-//     onEmployeInfo: function () {
-//     var oEmployeeModel = this.getView().getModel("employeeDetails");
-//     console.log("Employee Model Data:", oEmployeeModel.getData());
-//     var oDialog = new sap.m.Dialog({
-//         title: "Employee Information",
-//         content: new sap.ui.layout.form.SimpleForm({
-//             editable: false,
-//             layout: "ResponsiveGridLayout",
-//             content: [
-//                 new sap.m.Label({ text: "First Name" }),
-//                 new sap.m.Text({ text: "{employeeDetails>/FirstName}" }),
-
-//                 new sap.m.Label({ text: "Email" }),
-//                 new sap.m.Text({ text: "{employeeDetails>/Email}" }),
-
-//                 new sap.m.Label({ text: "Phone Number" }),
-//                 new sap.m.Text({ text: "{employeeDetails>/Phone}" }),
-
-//                 new sap.m.Label({ text: "Blood Group" }),
-//                 new sap.m.Text({ text: "{employeeDetails>/BloodGroup}" }),
-
-//                 new sap.m.Label({ text: "Department" }),
-//                 new sap.m.Text({ text: "{employeeDetails>/Department}" }),
-
-//                 new sap.m.Label({ text: "Position" }),
-//                 new sap.m.Text({ text: "{employeeDetails>/Position}" }),
-
-//                 new sap.m.Label({ text: "Salary" }),
-//                 new sap.m.Text({ text: "{employeeDetails>/Salary}" })
-//             ]
-//         }),
-//         beginButton: new sap.m.Button({
-//             text: "Close",
-//             press: function () {
-//                 oDialog.close();
-//             }
-//         }),
-//         afterClose: function () {
-//             oDialog.destroy();
-//         }
-//     });
-//     oDialog.setModel(oEmployeeModel, "employeeDetails");
-//     oDialog.open();
-// },          
-// onEmergencyContact: function () {        
-//     var that = this;
-//     if (!that.PersonalInfo) {
-//         that.PersonalInfo = sap.ui.xmlfragment("sample.Fragments.Employe", that);
-//     }
-//     that.getView().addDependent(that.PersonalInfo); 
-//     var oFormData = new sap.ui.model.json.JSONModel({
-//         ContactName: "",
-//         ContactPhone: "",
-//         ContactEmail: "",
-//         Relationship: ""
-//     });
-//     that.PersonalInfo.setModel(oFormData, "formData"); 
-//     var oEmpModel = this.getView().getModel("employeeDetails");
-//     var employeeEmail = oEmpModel.getProperty("/Email");
-//     var oModel = this.getOwnerComponent().getModel();
-    
-//     oModel.read("/EmployeeInfoEmergencyContact", {
-//         filters: [new sap.ui.model.Filter("ContactEmail", sap.ui.model.FilterOperator.EQ, employeeEmail)],
-//         success: function (oData) {
-//             if (oData.results && oData.results.length > 0) {
-//                 var oEmergencyContact = oData.results[0];
-//                 oFormData.setData({
-//                     ContactName: oEmergencyContact.ContactName,
-//                     ContactPhone: oEmergencyContact.ContactPhone ,
-//                     ContactEmail: oEmergencyContact.ContactEmail,
-//                     Relationship: oEmergencyContact.Relationship
-//                 });
-//             }
-//         },
-//         error: function (oError) {
-//             console.log("Error fetching emergency contact: ", oError);
-//             sap.m.MessageToast.show("Error fetching emergency contact information.");
-//         }
-//     });
-//     that.PersonalInfo.open();
-// },
 
 
 

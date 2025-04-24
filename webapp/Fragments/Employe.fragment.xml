@@ -1,7 +1,7 @@
-<core:FragmentDefinition xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" 
-    xmlns="sap.m">
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form">
   <Dialog id="PersonalInfo" title="Employee Details">
     <f:SimpleForm class="sapUiTinyMargin">
+
       <!-- Employee Information -->
       <Label text="Employee Name" />
       <Input value="{employeeDetails>/FirstName}" width="250px" editable="false"/>
@@ -15,25 +15,28 @@
       <Input value="{employeeDetails>/Position}" width="250px" editable="false"/>
       <Label text="Employee Salary"/>
       <Input value="{employeeDetails>/Salary}" width="250px" editable="false"/>
-      
+
       <!-- Emergency Contact Information -->
       <Label text="Contact Name" />
-      <Input value="{emergencyContact>/ContactName}" width="250px" editable="false"/>
+     <ComboBox
+      id="contactComboBox"
+      width="250px"
+      items="{emergencyContacts>/}"
+      selectedKey="{emergencyContact>/ContactEmail}"
+      selectionChange=".onContactSelectionChange"
+      placeholder="Select Contact Name">
+      <core:Item key="{emergencyContacts>ContactEmail}" text="{emergencyContacts>ContactName}" />
+      </ComboBox>
       <Label text="Contact Phone"/>
       <Input value="{emergencyContact>/ContactPhone}" width="250px" editable="false"/>
       <Label text="Relationship"/>
       <Input value="{emergencyContact>/Relationship}" width="250px" editable="false"/>
     </f:SimpleForm>
-    
     <footer>
       <Toolbar>
         <ToolbarSpacer/>
-        <Button text="Close" press="onCancleDialog"></Button>
+        <Button text="Close" press=".onCancleDialog"/>
       </Toolbar>
     </footer>
   </Dialog>
 </core:FragmentDefinition>
-
-
-
-
