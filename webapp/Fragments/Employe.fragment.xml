@@ -3,6 +3,8 @@
     <f:SimpleForm class="sapUiTinyMargin">
 
       <!-- Employee Information -->
+      <Label text="Employee ID"/>
+      <Input value="{employeeDetails>/ID}" width="250px" editable="false"/>
       <Label text="Employee Name" />
       <Input value="{employeeDetails>/FirstName}" width="250px" editable="false"/>
       <Label text="Employee Email"/>
@@ -27,6 +29,8 @@
       placeholder="Select Contact Name">
       <core:Item key="{emergencyContacts>ContactEmail}" text="{emergencyContacts>ContactName}" />
       </ComboBox>
+      <Label text="Contact Email"/>
+      <Input value="{emergencyContact>/ContactEmail}" width="250px" editable="false"/>
       <Label text="Contact Phone"/>
       <Input value="{emergencyContact>/ContactPhone}" width="250px" editable="false"/>
       <Label text="Relationship"/>
@@ -40,3 +44,4 @@
     </footer>
   </Dialog>
 </core:FragmentDefinition>
+

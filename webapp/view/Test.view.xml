@@ -21,14 +21,15 @@
                 <core:Item key="20000" text="20,000+" />
             </items>
         </Select>
+        <Button text="Employee Leave logs" press="onLeave"></Button>
         </HBox>
-
     <List id="employeeList" items="{/event}" itemPress="onNavigation">
     <items>
         <StandardListItem 
             title="{FirstName} {LastName}" 
             description="{Email}" 
-            type="Navigation">
+            info="{ID}"
+            type="Active">
         </StandardListItem>
     </items>
     </List>

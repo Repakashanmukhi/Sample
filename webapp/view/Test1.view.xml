@@ -8,6 +8,7 @@
         <content>
             <VBox>
                 <Button id="button1" text="Employee Information" press="onEmployeeInfo"/>
+                <Button id="button2" text= "Employee Leave Details" press="onEmpLeave"></Button>
             </VBox>
         </content>
     </Page>

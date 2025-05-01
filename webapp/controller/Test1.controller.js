@@ -3,74 +3,109 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/MessageToast"
-], function (Controller, JSONModel, Filter, FilterOperator, MessageToast) {
+    "sap/m/MessageToast",
+    "sap/ui/core/format/DateFormat"
+], function (Controller, JSONModel, Filter, FilterOperator, MessageToast, DateFormat) {
     "use strict";
     var that;
     return Controller.extend("sample.controller.Test1", {
         onInit: function () {
             that = this;
-            var oRouter = this.getOwnerComponent().getRouter();
+            var oRouter = that.getOwnerComponent().getRouter();
             var oRoute = oRouter.getRoute("Test1");
-            oRoute.attachPatternMatched(this._onRouteMatched, this);
+            oRoute.attachPatternMatched(that._onRouteMatched, that);
         },
+
         _onRouteMatched: function (oEvent) {
             var oArgs = oEvent.getParameter("arguments");
             var employeeId = oArgs.employeeId;
-            var oModel = this.getOwnerComponent().getModel();
+            var oModel = that.getOwnerComponent().getModel();
             oModel.read("/EmployeeInfo", {
                 success: function (oData) {
                     var oEmployee = oData.results.find(emp => emp.ID === employeeId);
                     var oEmployeeModel = new JSONModel(oEmployee);
-                    this.getView().setModel(oEmployeeModel, "employeeDetails");
-                }.bind(this),
+                    that.getView().setModel(oEmployeeModel, "employeeDetails");
+                }.bind(that),
                 error: function (oError) {
                     console.log("Error fetching employee: ", oError);
                 }
             });
         },
+
         onEmployeeInfo: function () {
-            var that = this;
             if (!that.PersonalInfo) {
                 that.PersonalInfo = sap.ui.xmlfragment("sample.Fragments.Employe", that);
                 that.getView().addDependent(that.PersonalInfo);
             }
-            var oEmployeeModel = this.getView().getModel("employeeDetails");
-            var employeeEmail = oEmployeeModel.getProperty("/Email");
-            var oModel = this.getOwnerComponent().getModel();
+            var oEmployeeModel = that.getView().getModel("employeeDetails");
+            var employeeIds = oEmployeeModel.getProperty("/ID");
+            var oModel = that.getOwnerComponent().getModel();
             oModel.read("/EmployeeInfoEmergencyContact", {
-                filters: [new sap.ui.model.Filter("ContactEmail", sap.ui.model.FilterOperator.EQ, employeeEmail)],
+                filters: [new Filter("EmployeeID", FilterOperator.EQ, employeeIds)],
                 success: function (oData) {
                     var contacts = oData.results;
-                    that.getView().setModel(new sap.ui.model.json.JSONModel(contacts), "emergencyContacts");
-                    that.getView().setModel(new sap.ui.model.json.JSONModel({}), "emergencyContact");
+                    that.getView().setModel(new JSONModel(contacts), "emergencyContacts");
+                    that.getView().setModel(new JSONModel({}), "emergencyContact");
                     var combinedData = {
                         employee: oEmployeeModel.getData(),
                         oEmergencyContact: {}
                     };
-                    that.getView().setModel(new sap.ui.model.json.JSONModel(combinedData), "combinedData");
+                    that.getView().setModel(new JSONModel(combinedData), "combinedData");
                     that.PersonalInfo.open();
-                },
+                }.bind(that),
                 error: function (err) {
                     console.log("Error fetching emergency contacts: ", err);
                 }
             });
         },
+
         onContactSelectionChange: function (oEvent) {
             var selected = oEvent.getParameter("selectedItem").getBindingContext("emergencyContacts").getObject();
-            var oContactModel = this.getView().getModel("emergencyContact");
-                oContactModel.setData(selected);  
-            var employee = this.getView().getModel("employeeDetails").getData();
+            that.getView().getModel("emergencyContact").setData(selected);
+            var employee = that.getView().getModel("employeeDetails").getData();
             var combined = {
                 employee: employee,
                 oEmergencyContact: selected
             };
-            this.getView().setModel(new sap.ui.model.json.JSONModel(combined), "combinedData");
+            that.getView().setModel(new JSONModel(combined), "combinedData");
         },
+
         onCancleDialog: function () {
-            if (this.PersonalInfo) {
-                this.PersonalInfo.close();
+            if (that.PersonalInfo) {
+                that.PersonalInfo.close();
             }
+            if (that.LeaveInfo) {
+                that.LeaveInfo.close();
+            }
+        },
+
+        formatDate: function (sDate) {
+            if (sDate) {
+                var oDate = new Date(sDate);
+                var oFormatter = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
+                return oFormatter.format(oDate);
+            }
+        },
+        onEmpLeave: function () {
+            if (!that.LeaveInfo) {
+                that.LeaveInfo = sap.ui.xmlfragment("sample.Fragments.EmployeeLeave", that);
+                that.getView().addDependent(that.LeaveInfo);
+            }
+            var oEmployeeModel = that.getView().getModel("employeeDetails");
+            var employeeId = oEmployeeModel.getProperty("/ID");
+            var oModel = that.getOwnerComponent().getModel();
+
+            oModel.read("/EmployeeLeaveLog", {
+                filters: [new Filter("EmployeeID_ID", FilterOperator.EQ, employeeId)],
+                success: function (oData) {
+                    var oLeaveModel = new JSONModel({ leaves: oData.results});
+                    that.LeaveInfo.setModel(oLeaveModel);
+                    that.LeaveInfo.open();
+                },
+                error: function () {
+                    MessageToast.show("Failed to load leave data");
+                }
+            });
         }
     });
 });
