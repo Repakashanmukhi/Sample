@@ -3,14 +3,14 @@
     "sap/ui/model/Filter", 
     "sap/ui/model/FilterOperator", 
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageToast"
-], function (Controller, Filter, FilterOperator, JSONModel,MessageToast) { 
+    "sap/m/MessageToast",
+    "sap/ui/comp/valuehelpdialog/ValueHelpDialog"
+], function (Controller, Filter, FilterOperator, JSONModel,MessageToast, ValueHelpDialog) { 
     "use strict"; 
     var that;
     return Controller.extend("sample.controller.Test", { 
         onInit: function () {
             that = this;
-            that.oEventBus = that.getOwnerComponent().getEventBus();
             var oResourceModel = this.getOwnerComponent().getModel("i18n").getResourceBundle(); 
             var sTitle = oResourceModel.getText("title"); 
             this.byId("Text").setText(sTitle);
@@ -56,7 +56,6 @@
             oBinding.filter(aFilters);
         }, 
         onLeave: function() {
-            var that = this;
             var oModel = this.getView().getModel();
                 if (!that.create) {
                 that.create = sap.ui.xmlfragment("sample.Fragments.Leave", that);
@@ -84,17 +83,61 @@
                         LeaveCount: oLeaveCount[empId]
                         });
                     }
-                    
+
                     var JSONModel = new sap.ui.model.json.JSONModel({leaves: aLeaveCountArray});
                     that.create.setModel(JSONModel);
                 }
             });
         },
-        
         onClose: function(){
             that.create.close();
         },
+        onDepartmentValueHelp: function () {
+            if (!that.Department) {
+                that.Department = sap.ui.xmlfragment("sample.Fragments.Department", that);
+                that.getView().addDependent(that.Department);
+            }
+            var oModel = that.getView().getModel();
+            oModel.read("/EmployeeInfo", {
+                success: function (oData) {
+                    var aDepartments = [];
+                    var uniqueDepartments = []; 
+                    oData.results.forEach(function (employee) {
+                        var department = employee.Department;
+                         if (department && uniqueDepartments.indexOf(department) === -1) {
+                            uniqueDepartments.push(department); 
+                         }
+                    });
+                    uniqueDepartments.forEach(function (dept) {
+                        aDepartments.push({ 
+                            Department: dept 
+                        });
+                    });
+                    var oDeptModel = new JSONModel(aDepartments);
+                    that.Department.setModel(oDeptModel, "departmentModel");
+                    that.Department.open();
+                },
+                error: function () {
+                    MessageToast.show("Error loading departments.");
+                }
+            });
+        },
+        onDepartment: function (oEvent) {
+            var oSelectedItem = oEvent.getParameter("listItem");
+            var sSelectedDepartment = oSelectedItem.getTitle(); 
+            that.Department.close();
+            var oList = that.byId("employeeList");
+            var oBinding = oList.getBinding("items");
+            var aFilters = [];
+            if (sSelectedDepartment) {
+                aFilters.push(new Filter("Department", FilterOperator.EQ, sSelectedDepartment)); 
+            }
+            oBinding.filter(aFilters);
+        },
         
+        onCloseDialog:function(){
+            that.Department.close();
+        },
         onNavigation: function (oEvent) {   
             var oSelectedItem = oEvent.getParameter("listItem");
             var oContext = oSelectedItem.getBindingContext();

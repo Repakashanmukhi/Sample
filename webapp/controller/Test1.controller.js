@@ -71,12 +71,7 @@ sap.ui.define([
         },
 
         onCancleDialog: function () {
-            if (that.PersonalInfo) {
-                that.PersonalInfo.close();
-            }
-            if (that.LeaveInfo) {
-                that.LeaveInfo.close();
-            }
+            that.PersonalInfo.close();
         },
 
         formatDate: function (sDate) {
@@ -107,7 +102,7 @@ sap.ui.define([
                 }
             });
         },
-        onCancleDialog: function(){
+        onCancle: function(){
             that.LeaveInfo.close();
         }
     });
