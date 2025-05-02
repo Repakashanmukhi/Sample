@@ -21,8 +21,8 @@
             <items>
                 <ColumnListItem>
                     <cells>
-                        <Text text="{LeaveStartDate}"/>
-                        <Text text="{LeaveEndDate}"/>
+                        <Text text="{path: 'LeaveStartDate', formatter: '.formatDate'}"/>
+                        <Text text="{path: 'LeaveEndDate', formatter: '.formatDate'}"/>
                         <Text text="{LeaveType}"/>
                         <Text text="{Reason}"/>
                         <Text text="{Status}"/>
@@ -33,7 +33,7 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button text="Close" press="sample.controller.Test1.onCancleDialog"/>
+                <Button text="Close" press="onCancleDialog"/>
             </Toolbar>
         </footer>
     </Dialog>

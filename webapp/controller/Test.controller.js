@@ -84,6 +84,7 @@
                         LeaveCount: oLeaveCount[empId]
                         });
                     }
+                    
                     var JSONModel = new sap.ui.model.json.JSONModel({leaves: aLeaveCountArray});
                     that.create.setModel(JSONModel);
                 }
@@ -93,15 +94,17 @@
         onClose: function(){
             that.create.close();
         },
+        
         onNavigation: function (oEvent) {   
             var oSelectedItem = oEvent.getParameter("listItem");
             var oContext = oSelectedItem.getBindingContext();
             var oData = oContext.getObject();
             var employeeId = oData.ID;
             this.getOwnerComponent().getRouter().navTo("Test1", {
-                employeeId: employeeId
+                employeeId: employeeId,
             });
         }
+
         // To create Employee Leave log 
         // onAddRow: function(){
         //     var TempEmployee = new JSONModel({
@@ -161,9 +164,65 @@
         //     } 
         //     oLeaveModel.setProperty("/Employees", []); 
         // },
-          
+        // To Update Employee Leave Log
+        // onUpdate: function(oEvent){
+        //     if (!that.update) {
+        //         that.update = sap.ui.xmlfragment("sample.Fragments.Busy", that);
+        //     }
+        //     that.update.open();
+        //     var oContext = oEvent.getSource().getBindingContext().getObject(); 
+        //     sap.ui.getCore().byId("inputEmployeeID").setValue(oContext.EmployeeID_ID);
+        //     sap.ui.getCore().byId("inputLeaveStartDate").setValue(oContext.LeaveStartDate);
+        //     sap.ui.getCore().byId("inputLeaveEndDate").setValue(oContext.LeaveEndDate);
+        //     sap.ui.getCore().byId("inputLeaveType").setValue(oContext.LeaveType);
+        //     sap.ui.getCore().byId("inputReason").setValue(oContext.Reason);
+        //     sap.ui.getCore().byId("inputStatus").setValue(oContext.Status);
+        // },
+        // updateEmployeeLeaveLog: function () {
+        //     var sId = sap.ui.getCore().byId("inputEmployeeID").getValue();
+        //     var sLSD = sap.ui.getCore().byId("inputLeaveStartDate").getValue();
+        //     var sLED = sap.ui.getCore().byId("inputLeaveEndDate").getValue(); 
+        //     var sLT = sap.ui.getCore().byId("inputLeaveType").getValue();
+        //     var sR = sap.ui.getCore().byId("inputReason").getValue();
+        //     var sS = sap.ui.getCore().byId("inputStatus").getValue();
+        //     var oUpdateLeaveLog = {
+        //         EmployeeID_ID: sId,
+        //         LeaveStartDate: new Date(sLSD),
+        //         LeaveEndDate: new Date(sLED),
+        //         LeaveType: sLT,
+        //         Reason: sR,
+        //         Status: sS
+        //     };
+        //     var oDataModel = that.getOwnerComponent().getModel();
+        //     var updatePath = "/EmployeeLeaveLog('" + sId + "')";
+        //     oDataModel.update(updatePath, oUpdateLeaveLog, {
+        //         success: function () {
+        //             sap.m.MessageToast.show("Leave log updated successfully.");
+        //         },
+        //         error: function (oError) {
+        //             sap.m.MessageBox.error("Failed to update leave log. Please try again.");
+        //         }
+        //     });
+        // },
+        // To Delete Employee Leave log 
+        // DeleteBtn: function(oEvent)
+        // {
+        //     var oButton=oEvent.getSource();
+        //     var oContext=oButton.getBindingContext();
+        //     var sPath=oContext.getPath();
+        //     var oModel=that.getView().getModel();
+        //     oModel.remove(sPath,{
+        //         success: function()
+        //         {
+        //             sap.m.MessageToast.show("Record deleted successfully!");
+        //         },
+        //         error: function()
+        //         {
+        //             sap.m.MessageToast.show("Cannot delete record");
+        //         }
+        //     }) 
+        // },
 
-        
         
     }); 
 });

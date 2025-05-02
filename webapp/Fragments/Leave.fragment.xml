@@ -52,9 +52,11 @@ xmlns="sap.m">
             </ColumnListItem>
             </items>
         </Table> -->
-        <Table id="leaveTable" items="{/leaves}">
+        <!-- <Table id="leaveTable" items="{/leaves}">
+         -->
+         <Table id="leaveTable" items="{path: '/leaves', sorter: {path: 'EmployeeID', descending: false }}">
             <columns>
-                <Column>
+                <Column >
                     <Text text="Employee ID"/>
                 </Column>
                 <Column>

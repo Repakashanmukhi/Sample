@@ -12,7 +12,7 @@ sap.ui.define([
         onInit: function () {
             that = this;
             var oRouter = that.getOwnerComponent().getRouter();
-            var oRoute = oRouter.getRoute("Test1");
+            var oRoute = oRouter.getRoute("Test1"); 
             oRoute.attachPatternMatched(that._onRouteMatched, that);
         },
 
@@ -106,6 +106,9 @@ sap.ui.define([
                     MessageToast.show("Failed to load leave data");
                 }
             });
+        },
+        onCancleDialog: function(){
+            that.LeaveInfo.close();
         }
     });
 });

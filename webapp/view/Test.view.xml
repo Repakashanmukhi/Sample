@@ -21,8 +21,8 @@
                 <core:Item key="20000" text="20,000+" />
             </items>
         </Select>
-        <Button text="Employee Leave logs" press="onLeave"></Button>
-        </HBox>
+                <Button text="Employee Leave logs" press="onLeave"></Button>
+            </HBox>
     <List id="employeeList" items="{/event}" itemPress="onNavigation">
     <items>
         <StandardListItem 
@@ -33,6 +33,49 @@
         </StandardListItem>
     </items>
     </List>
+
+
+    <!-- <Table items="{/EmployeeLeaveLog}" id="data">
+        <columns>
+            <Column >
+                <Text text="EmployeeID"></Text>
+            </Column>
+            <Column >
+                <Text text="Leave start Date"></Text>
+            </Column>
+            <Column >
+                <Text text="Leave End Date"></Text>
+            </Column>
+            <Column >
+                <Text text="LeaveType"></Text>
+            </Column>
+            <Column >
+                <Text text="Reason"></Text>
+            </Column>
+            <Column >
+                <Text text="Status"></Text>
+            </Column>
+            <Column >
+                <Text text="Action"></Text>
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem>
+                <cells>
+                    <Text text="{EmployeeID_ID}"/>
+                    <Text text="{LeaveStartDate}"/>
+                    <Text text="{LeaveEndDate}"/>
+                    <Text text="{LeaveType}"/>
+                    <Text text="{Reason}"/>
+                    <Text text="{Status}"/>
+                    <HBox>
+                        <Button icon="sap-icon://user-edit" class="sapUiTinyMarginEnd" press="onUpdate"></Button>
+                        <Button icon="sap-icon://delete" class="sapUiTinyMarginEnd" press="DeleteBtn" type="Reject"></Button>
+                    </HBox>
+                </cells>
+            </ColumnListItem>
+            </items>
+    </Table> -->
    
 
     <!-- <VBox class="sapUiSmallMargin">

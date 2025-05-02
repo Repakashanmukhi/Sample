@@ -1,5 +1,18 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-	<BusyDialog id="BusyDialog"
-    	title="Loading"
-        showCancelButton="true" />
+    <Dialog id="update" title="Update Leave Log">
+        <VBox class="sapUiSmallMargin">
+            <Input id="inputEmployeeID" placeholder="Employee ID"/>
+            <DatePicker id="inputLeaveStartDate" placeholder="Leave Start Date" displayFormat="yyyy-MM-dd"/>
+            <DatePicker id="inputLeaveEndDate" placeholder="Leave End Date" displayFormat="yyyy-MM-dd"/>
+            <Input id="inputLeaveType" placeholder="Leave Type"/>
+            <Input id="inputReason" placeholder="Reason"/>
+            <Input id="inputStatus" placeholder="Status"/>
+        </VBox>
+        <beginButton>
+            <Button text="Update" press="updateEmployeeLeaveLog"/>
+        </beginButton>
+        <endButton>
+            <Button text="Cancel" press="onCancelUpdate"/>
+        </endButton>
+    </Dialog>
 </core:FragmentDefinition>
