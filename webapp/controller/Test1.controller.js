@@ -81,6 +81,16 @@ sap.ui.define([
                 return oFormatter.format(oDate);
             }
         },
+        formatStatus: function(status) { 
+            switch (status) { 
+                case "Approved": 
+                    return "Success"; 
+                case "Rejected": 
+                    return "Error"; 
+                case "Hold": 
+                    return "Warning"; 
+            } 
+        },
         onEmpLeave: function () {
             if (!that.LeaveInfo) {
                 that.LeaveInfo = sap.ui.xmlfragment("sample.Fragments.EmployeeLeave", that);

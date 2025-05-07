@@ -21,12 +21,11 @@
             <items>
                 <ColumnListItem>
                     <cells>
-                     <!-- <Text text="{path: 'JoiningDate', formatter: '.formatJoiningDate'}" /> -->
                         <Text text="{path: 'LeaveStartDate', formatter: '.formatDate'}"/>
                         <Text text="{path: 'LeaveEndDate', formatter: '.formatDate'}"/>
                         <Text text="{LeaveType}"/>
                         <Text text="{Reason}"/>
-                        <Text text="{Status}"/>
+                        <ObjectStatus text="{Status}" state="{path: 'Status',formatter: '.formatStatus'}"/>
                     </cells>
                 </ColumnListItem>
             </items>
