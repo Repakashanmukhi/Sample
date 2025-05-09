@@ -1,40 +1,60 @@
 <core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form">
     <Dialog id="LeaveInfo" title="Employee Leave Details">
-          <Table id="leave" items="{/leaves}">
-            <columns>
-                <Column>
-                    <Text text="Leave Start Date"/>
-                </Column>
-                <Column>
-                    <Text text="Leave End Date"/>
-                </Column>
-                <Column>
-                    <Text text="Leave Type"/>
-                </Column>
-                <Column>
-                    <Text text="Reason"/>
-                </Column>
-                <Column>
-                    <Text text="Status"/>
-                </Column>
-            </columns>
-            <items>
-                <ColumnListItem>
-                    <cells>
-                        <Text text="{path: 'LeaveStartDate', formatter: '.formatDate'}"/>
-                        <Text text="{path: 'LeaveEndDate', formatter: '.formatDate'}"/>
-                        <Text text="{LeaveType}"/>
-                        <Text text="{Reason}"/>
-                        <ObjectStatus text="{Status}" state="{path: 'Status',formatter: '.formatStatus'}"/>
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
-        <footer>
-            <Toolbar>
-                <ToolbarSpacer/>
+    <VBox class="sapUiSmallMargin">
+            <Panel headerText="Leaves Inforamtion" expandable="true" expanded="true" id="descriptionPanel" class="sapUiTinyMarginBottom">
+                <VBox class="sapUIMargin" >
+                    <f:SimpleForm >
+                        <Label text="Total Leaves" labelFor="month" />
+                        <Input id="Totalleaves" type="Text" value="{/TotalLeaves}" editable="false" width="900px"/>
+                        <Label text="Leaves used" labelFor="month" />
+                        <Input id="Leavesused" type="Text" value="{/LeavesUsed}" editable="false" width="900px"/>
+                        <Label text="Leaves Balance" labelFor="salary" />
+                        <Input id="Leavebalance" type="Number" value="{/LeaveBalance}" editable="false" width="900px"/>
+                    </f:SimpleForm>
+                </VBox>
+            </Panel>
+        </VBox>
+    <VBox class="sapUiSmallMargin">
+        <Panel headerText="Leaves Description" expandable="true" expanded="true" id="LeavePanel" class="sapUiTinyMarginBottom">
+            <VBox class="sapUiSmallMargin">
+                <Table id="leave" items="{/leaves}">
+                    <columns>
+                        <Column>
+                            <Text text="Leave Start Date"/>
+                        </Column>
+                        <Column>
+                            <Text text="Leave End Date"/>
+                        </Column>
+                        <Column>
+                            <Text text="Leave Type"/>
+                        </Column>
+                        <Column>
+                            <Text text="Reason"/>
+                        </Column>
+                        <Column>
+                            <Text text="Status"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{path: 'LeaveStartDate', formatter: '.formatDate'}"/>
+                                <Text text="{path: 'LeaveEndDate', formatter: '.formatDate'}"/>
+                                <Text text="{LeaveType}"/>
+                                <Text text="{Reason}"/>
+                                <ObjectStatus text="{Status}" state="{path: 'Status',formatter: '.formatStatus'}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </Panel>
+    </VBox>
+    <footer>
+        <Toolbar>
+            <ToolbarSpacer/>
                 <Button text="Close" press="onCancle"/>
-            </Toolbar>
-        </footer>
+        </Toolbar>
+    </footer>
     </Dialog>
 </core:FragmentDefinition>

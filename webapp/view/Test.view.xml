@@ -42,12 +42,6 @@
     </items>
     </List>
 
-    
-
-
-   
-   
-
     <!-- <VBox class="sapUiSmallMargin">
         <Label text="Input 1" />
         <Input id="input1" placeholder="Enter Input 1" liveChange="onInputChange" type="Number" />

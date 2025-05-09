@@ -99,16 +99,29 @@ sap.ui.define([
             var oEmployeeModel = that.getView().getModel("employeeDetails");
             var employeeId = oEmployeeModel.getProperty("/ID");
             var oModel = that.getOwnerComponent().getModel();
-
-            oModel.read("/EmployeeLeaveLog", {
+            oModel.read("/EmployeeLeaveSet", {
                 filters: [new Filter("EmployeeID_ID", FilterOperator.EQ, employeeId)],
-                success: function (oData) {
-                    var oLeaveModel = new JSONModel({ leaves: oData.results});
-                    that.LeaveInfo.setModel(oLeaveModel);
-                    that.LeaveInfo.open();
+                success: function (leaveData) {
+                    var leaveSummary = leaveData.results && leaveData.results[0];
+                    oModel.read("/EmployeeLeaveLog", {
+                        filters: [new Filter("EmployeeID_ID", FilterOperator.EQ, employeeId)],
+                        success: function (logData) {
+                            var combinedModel = new JSONModel({
+                                TotalLeaves: leaveSummary.TotalLeaves,
+                                LeavesUsed: leaveSummary.LeavesUsed,
+                                LeaveBalance: leaveSummary.LeaveBalance,
+                                leaves: logData.results
+                            });
+                            that.LeaveInfo.setModel(combinedModel);
+                            that.LeaveInfo.open();
+                        },
+                        error: function () {
+                            MessageToast.show("Failed to load leave log data");
+                        }
+                    });
                 },
                 error: function () {
-                    MessageToast.show("Failed to load leave data");
+                    MessageToast.show("Failed to load leave summary data");
                 }
             });
         },
@@ -117,7 +130,7 @@ sap.ui.define([
         }
     });
 });
-
+ 
 
 
 
