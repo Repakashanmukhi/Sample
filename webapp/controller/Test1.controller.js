@@ -3,75 +3,97 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/m/MessageToast",
-    "sap/ui/core/format/DateFormat"
-], function (Controller, JSONModel, Filter, FilterOperator, MessageToast, DateFormat) {
+    "sap/ui/core/format/DateFormat",
+], function (Controller, JSONModel, Filter, FilterOperator, DateFormat) {
     "use strict";
-    var that;
+
     return Controller.extend("sample.controller.Test1", {
         onInit: function () {
-            that = this;
-            var oRouter = that.getOwnerComponent().getRouter();
-            var oRoute = oRouter.getRoute("Test1"); 
-            oRoute.attachPatternMatched(that._onRouteMatched, that);
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.getRoute("Test1").attachPatternMatched(this._onRouteMatched, this);
         },
 
         _onRouteMatched: function (oEvent) {
-            var oArgs = oEvent.getParameter("arguments");
-            var employeeId = oArgs.employeeId;
-            var oModel = that.getOwnerComponent().getModel();
+            var employeeId = oEvent.getParameter("arguments").employeeId;
+            var oModel = this.getOwnerComponent().getModel();
+
+            // --- Load EmployeeInfo ---
             oModel.read("/EmployeeInfo", {
                 success: function (oData) {
-                    var oEmployee = oData.results.find(emp => emp.ID === employeeId);
-                    var oEmployeeModel = new JSONModel(oEmployee);
-                    that.getView().setModel(oEmployeeModel, "employeeDetails");
-                }.bind(that),
-                error: function (oError) {
-                    console.log("Error fetching employee: ", oError);
-                }
-            });
-        },
+                    var employee = oData.results.find(emp => emp.ID === employeeId);
+                    if (employee) {
+                        this.getView().setModel(new JSONModel({items: employee}), "employeeDetails");
 
-        onEmployeeInfo: function () {
-            if (!that.PersonalInfo) {
-                that.PersonalInfo = sap.ui.xmlfragment("sample.Fragments.Employe", that);
-                that.getView().addDependent(that.PersonalInfo);
-            }
-            var oEmployeeModel = that.getView().getModel("employeeDetails");
-            var employeeIds = oEmployeeModel.getProperty("/ID");
-            var oModel = that.getOwnerComponent().getModel();
-            oModel.read("/EmployeeInfoEmergencyContact", {
-                filters: [new Filter("EmployeeID", FilterOperator.EQ, employeeIds)],
-                success: function (oData) {
-                    var contacts = oData.results;
-                    that.getView().setModel(new JSONModel(contacts), "emergencyContacts");
-                    that.getView().setModel(new JSONModel({}), "emergencyContact");
-                    var combinedData = {
-                        employee: oEmployeeModel.getData(),
-                        oEmergencyContact: {}
-                    };
-                    that.getView().setModel(new JSONModel(combinedData), "combinedData");
-                    that.PersonalInfo.open();
-                }.bind(that),
+                        // Load Emergency Contact
+                        this._loadEmergencyContact(employeeId);
+
+                        // Load Leave Summary
+                        this._loadLeaveSummary(employeeId);
+
+                        // Load Leave Logs
+                        this._loadLeaveLogs(employeeId);
+
+                        // Load Payslips
+                        this._loadPayslips(employeeId);
+                    }
+                }.bind(this),
                 error: function (err) {
-                    console.log("Error fetching emergency contacts: ", err);
+                    console.log("Error fetching EmployeeInfo:", err);
                 }
             });
         },
 
-        onContactSelectionChange: function (oEvent) {
-            var selected = oEvent.getParameter("selectedItem").getBindingContext("emergencyContacts").getObject();
-            that.getView().getModel("emergencyContact").setData(selected);
-            var employee = that.getView().getModel("employeeDetails").getData();
-            var combined = {
-                employee: employee,
-                oEmergencyContact: selected
-            };
-            that.getView().setModel(new JSONModel(combined), "combinedData");
+        _loadEmergencyContact: function (employeeId) {
+            var oModel = this.getOwnerComponent().getModel();
+            oModel.read("/EmployeeInfoEmergencyContact", {
+                filters: [new Filter("EmployeeID", FilterOperator.EQ, employeeId)],
+                success: function (oData) {
+                    // var contact = oData.results && oData.results[0];
+                    this.getView().setModel(new JSONModel({items: oData.results}), "emergencyContact");
+                }.bind(this),
+                error: function (err) {
+                    console.log("Error fetching Emergency Contact:", err);
+                }
+            });
         },
 
-        onCancleDialog: function () {
-            that.PersonalInfo.close();
+        _loadLeaveSummary: function (employeeId) {
+            var oModel = this.getOwnerComponent().getModel();
+            oModel.read("/EmployeeLeaveSet", {
+                filters: [new Filter("EmployeeID_ID", FilterOperator.EQ, employeeId)],
+                success: function (oData) {
+                this.getView().setModel(new JSONModel({items: oData.results}), "leaveSummary");
+                }.bind(this),
+                error: function (err) {
+                    console.log("Error fetching Leave Summary:", err);
+                }
+            });
+        },
+
+        _loadLeaveLogs: function (employeeId) {
+            var oModel = this.getOwnerComponent().getModel();
+            oModel.read("/EmployeeLeaveLog", {
+                filters: [new Filter("EmployeeID_ID", FilterOperator.EQ, employeeId)],
+                success: function (oData) {
+                    this.getView().setModel(new JSONModel(oData.results), "leaveLogs");
+                }.bind(this),
+                error: function (err) {
+                    console.log("Error fetching Leave Logs:", err);
+                }
+            });
+        },
+
+        _loadPayslips: function (employeeId) {
+            var oModel = this.getOwnerComponent().getModel();
+            oModel.read("/EmployeePayslips", {
+                filters: [new Filter("EmployeeID_ID", FilterOperator.EQ, employeeId)],
+                success: function (oData) {
+                    this.getView().setModel(new JSONModel(oData.results), "payslips");
+                }.bind(this),
+                error: function (err) {
+                    console.log("Error fetching Payslips:", err);
+                }
+            });
         },
 
         formatDate: function (sDate) {
@@ -80,7 +102,9 @@ sap.ui.define([
                 var oFormatter = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
                 return oFormatter.format(oDate);
             }
+            return "";
         },
+
         formatStatus: function(status) { 
             switch (status) { 
                 case "Approved": 
@@ -91,46 +115,7 @@ sap.ui.define([
                     return "Warning"; 
             } 
         },
-        onEmpLeave: function () {
-            if (!that.LeaveInfo) {
-                that.LeaveInfo = sap.ui.xmlfragment("sample.Fragments.EmployeeLeave", that);
-                that.getView().addDependent(that.LeaveInfo);
-            }
-            var oEmployeeModel = that.getView().getModel("employeeDetails");
-            var employeeId = oEmployeeModel.getProperty("/ID");
-            var oModel = that.getOwnerComponent().getModel();
-            oModel.read("/EmployeeLeaveSet", {
-                filters: [new Filter("EmployeeID_ID", FilterOperator.EQ, employeeId)],
-                success: function (leaveData) {
-                    var leaveSummary = leaveData.results && leaveData.results[0];
-                    oModel.read("/EmployeeLeaveLog", {
-                        filters: [new Filter("EmployeeID_ID", FilterOperator.EQ, employeeId)],
-                        success: function (logData) {
-                            var combinedModel = new JSONModel({
-                                TotalLeaves: leaveSummary.TotalLeaves,
-                                LeavesUsed: leaveSummary.LeavesUsed,
-                                LeaveBalance: leaveSummary.LeaveBalance,
-                                leaves: logData.results
-                            });
-                            that.LeaveInfo.setModel(combinedModel);
-                            that.LeaveInfo.open();
-                        },
-                        error: function () {
-                            MessageToast.show("Failed to load leave log data");
-                        }
-                    });
-                },
-                error: function () {
-                    MessageToast.show("Failed to load leave summary data");
-                }
-            });
-        },
-        onCancle: function(){
-            that.LeaveInfo.close();
-        }
     });
 });
- 
-
 
 

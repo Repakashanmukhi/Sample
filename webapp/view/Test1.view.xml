@@ -2,18 +2,139 @@
     controllerName="sample.controller.Test1"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:layout="sap.ui.layout">
-    <Page id="pages">
-        <content>
-            <VBox>
-                <Button id="button1" text="Employee Information" press="onEmployeeInfo" />
-                <Button id="button2" text="Employee Leave Details" press="onEmpLeave" />
-            </VBox>
-        </content>
-    </Page>
+    xmlns:layout="sap.ui.layout"
+    xmlns:objectPage="sap.uxap"
+    xmlns:core="sap.ui.core">
+    <objectPage:ObjectPageLayout
+        id="employeePage"
+        showTitleInHeaderContent="true"
+        headerTitle="#employeeDetails">
+        <!-- Header -->
+        <objectPage:headerTitle>
+            <objectPage:ObjectPageDynamicHeaderTitle>
+                <objectPage:heading>
+                    <Title text="{employeeDetails>FirstName} {employeeDetails>LastName}" level="H1" />
+                </objectPage:heading>
+                <objectPage:expandedContent>
+                    <ObjectStatus text="Employee Details" state="Success" />
+                </objectPage:expandedContent>
+            </objectPage:ObjectPageDynamicHeaderTitle>
+        </objectPage:headerTitle>
+        <!-- Contact Avatar -->
+        <objectPage:headerContent>
+            <FlexBox wrap="Wrap" fitContainer="true">
+                <Avatar src="sap-icon://employee" displaySize="M" />
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <Text text= "EmployeeID: {employeeDetails>/items/ID}"></Text>
+                    <Text text="Name: {employeeDetails>/items/FirstName} {employeeDetails>/items/LastName}"></Text>
+                </layout:VerticalLayout>
+            </FlexBox>
+        </objectPage:headerContent>
+        <objectPage:sections>
+            <!-- Personal Info -->
+            <objectPage:ObjectPageSection title="Personal Info">
+                <objectPage:subSections>
+                    <objectPage:ObjectPageSubSection>
+                        <VBox>
+                            <Link text="Phone: {employeeDetails>/items/Phone}" />
+                            <Link text="Email: {employeeDetails>/items/Email}" />
+                            <Text text="Blood Group: {employeeDetails>/items/BloodGroup}" />
+                            <Text text="Joining Date: {employeeDetails>/items/JoiningDate}" />
+                        </VBox>
+                    </objectPage:ObjectPageSubSection>
+                </objectPage:subSections>
+            </objectPage:ObjectPageSection>
+            <!-- Job Info -->
+            <objectPage:ObjectPageSection title="Job Details">
+                <objectPage:subSections>
+                    <objectPage:ObjectPageSubSection>
+                        <VBox>
+                            <Text text="Department: {employeeDetails>/items/Department}" />
+                            <Text text="Position: {employeeDetails>/items/Position}" />
+                            <Text text="Salary: {employeeDetails>/items/Salary}" />
+                        </VBox>
+                    </objectPage:ObjectPageSubSection>
+                </objectPage:subSections>
+            </objectPage:ObjectPageSection>
+            <!-- Emergency Contact -->
+            <objectPage:ObjectPageSection title="Emergency Contact">
+                <objectPage:subSections>
+                    <objectPage:ObjectPageSubSection>
+                        <VBox>
+                            <Text text="Name: {emergencyContact>/items/0/ContactName}" />
+                            <Text text="Relationship: {emergencyContact>/items/0/Relationship}" />
+                            <Text text="Phone: {emergencyContact>/items/0/ContactPhone}" />
+                            <Text text="Email: {emergencyContact>/items/0/ContactEmail}" />
+                        </VBox>
+                    </objectPage:ObjectPageSubSection>
+                </objectPage:subSections>
+            </objectPage:ObjectPageSection>
+            <!-- Leave Summary -->
+            <objectPage:ObjectPageSection title="Leave Summary">
+                <objectPage:subSections>
+                    <objectPage:ObjectPageSubSection>
+                        <VBox>
+                            <Text text="Total Leaves: {leaveSummary>/items/0/TotalLeaves}" />
+                            <Text text="Used Leaves: {leaveSummary>/items/0/LeavesUsed}" />
+                            <Text text="Leave Balance: {leaveSummary>/items/0/LeaveBalance}" />
+                        </VBox>
+                    </objectPage:ObjectPageSubSection>
+                </objectPage:subSections>
+            </objectPage:ObjectPageSection>
+            <!-- Leave Logs -->
+            <objectPage:ObjectPageSection title="Leave Logs">
+                <objectPage:subSections>
+                    <objectPage:ObjectPageSubSection>
+                        <Table items="{leaveLogs>/}">
+                            <columns>
+                                <Column><Text text="Type" /></Column>
+                                <Column><Text text="Start" /></Column>
+                                <Column><Text text="End" /></Column>
+                                <Column><Text text="Reason" /></Column>
+                                <Column><Text text="Status" /></Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{leaveLogs>LeaveType}" />
+                                        <Text text="{path: 'LeaveStartDate', formatter: '.formatDate'}"/>
+                                        <Text text="{path: 'LeaveEndDate', formatter: '.formatDate'}"/>
+                                        <Text text="{leaveLogs>Reason}" />
+                                        <ObjectStatus text="{leaveLogs>Status}" state="{path: 'Status',formatter: '.formatStatus'}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </objectPage:ObjectPageSubSection>
+                </objectPage:subSections>
+            </objectPage:ObjectPageSection>
+            <!-- Payslips -->
+            <objectPage:ObjectPageSection title="Payslips">
+                <objectPage:subSections>
+                    <objectPage:ObjectPageSubSection>
+                        <Table items="{payslips>/}">
+                            <columns>
+                                <Column><Text text="Pay Date" /></Column>
+                                <Column><Text text="Basic Pay" /></Column>
+                                <Column><Text text="Deductions" /></Column>
+                                <Column><Text text="Net Pay" /></Column>
+                                <Column><Text text="Document" /></Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{payslips>PayDate}" />
+                                        <Text text="{payslips>BasicPay}" />
+                                        <Text text="{payslips>Deductions}" />
+                                        <Text text="{payslips>NetPay}" />
+                                        <Link text="Download" href="{payslips>PayslipDocument}" target="_blank" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </objectPage:ObjectPageSubSection>
+                </objectPage:subSections>
+            </objectPage:ObjectPageSection>
+        </objectPage:sections>
+    </objectPage:ObjectPageLayout>
 </mvc:View>
-
-
-
-
-
