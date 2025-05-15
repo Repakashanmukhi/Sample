@@ -2,14 +2,17 @@
     controllerName="sample.controller.Test1"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
     xmlns:layout="sap.ui.layout"
-    xmlns:objectPage="sap.uxap"
-    xmlns:core="sap.ui.core">
+    xmlns:form="sap.ui.layout.form"
+    xmlns:objectPage="sap.uxap">
+
     <objectPage:ObjectPageLayout
         id="employeePage"
         showTitleInHeaderContent="true"
-        headerTitle="#employeeDetails">
-        <!-- Header -->
+        alwaysShowContentHeader="true">
+
+        <!-- Header Title -->
         <objectPage:headerTitle>
             <objectPage:ObjectPageDynamicHeaderTitle>
                 <objectPage:heading>
@@ -20,68 +23,99 @@
                 </objectPage:expandedContent>
             </objectPage:ObjectPageDynamicHeaderTitle>
         </objectPage:headerTitle>
-        <!-- Contact Avatar -->
+        <!-- Header Content-->
         <objectPage:headerContent>
             <FlexBox wrap="Wrap" fitContainer="true">
                 <Avatar src="sap-icon://employee" displaySize="M" />
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                    <Text text= "EmployeeID: {employeeDetails>/items/ID}"></Text>
-                    <Text text="Name: {employeeDetails>/items/FirstName} {employeeDetails>/items/LastName}"></Text>
+                    <Text text="EmployeeID: {employeeDetails>/items/ID}" />
+                    <Text text="Name: {employeeDetails>/items/FirstName} {employeeDetails>/items/LastName}" />
                 </layout:VerticalLayout>
             </FlexBox>
         </objectPage:headerContent>
+        <!-- Sections -->
         <objectPage:sections>
-            <!-- Personal Info -->
+            <!-- Personal Info  -->
             <objectPage:ObjectPageSection title="Personal Info">
                 <objectPage:subSections>
                     <objectPage:ObjectPageSubSection>
-                        <VBox>
-                            <Link text="Phone: {employeeDetails>/items/Phone}" />
-                            <Link text="Email: {employeeDetails>/items/Email}" />
-                            <Text text="Blood Group: {employeeDetails>/items/BloodGroup}" />
-                            <Text text="Joining Date: {employeeDetails>/items/JoiningDate}" />
-                        </VBox>
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            class="sapUiSmallMarginBottom">
+                            <Label text="Phone" />
+                            <Link text="{employeeDetails>/items/Phone}" />
+                            <Label text="Email" />
+                            <Link text="{employeeDetails>/items/Email}" />
+                            <Label text="Blood Group" />
+                            <Text text="{employeeDetails>/items/BloodGroup}" />
+                            <Label text="Joining Date" />
+                            <Text text="{parts: [{path: 'employeeDetails>/items/JoiningDate'}], formatter: '.formatDate'}" />
+                        </form:SimpleForm>
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
             </objectPage:ObjectPageSection>
+
             <!-- Job Info -->
             <objectPage:ObjectPageSection title="Job Details">
                 <objectPage:subSections>
                     <objectPage:ObjectPageSubSection>
-                        <VBox>
-                            <Text text="Department: {employeeDetails>/items/Department}" />
-                            <Text text="Position: {employeeDetails>/items/Position}" />
-                            <Text text="Salary: {employeeDetails>/items/Salary}" />
-                        </VBox>
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            class="sapUiSmallMarginBottom">
+                            <Label text="Department" />
+                            <Text text="{employeeDetails>/items/Department}" />
+                            <Label text="Position" />
+                            <Text text="{employeeDetails>/items/Position}" />
+                            <Label text="Salary" />
+                            <Text text="{employeeDetails>/items/Salary}" />
+                        </form:SimpleForm>
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
             </objectPage:ObjectPageSection>
+
             <!-- Emergency Contact -->
             <objectPage:ObjectPageSection title="Emergency Contact">
                 <objectPage:subSections>
                     <objectPage:ObjectPageSubSection>
-                        <VBox>
-                            <Text text="Name: {emergencyContact>/items/0/ContactName}" />
-                            <Text text="Relationship: {emergencyContact>/items/0/Relationship}" />
-                            <Text text="Phone: {emergencyContact>/items/0/ContactPhone}" />
-                            <Text text="Email: {emergencyContact>/items/0/ContactEmail}" />
-                        </VBox>
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            class="sapUiSmallMarginBottom">
+                            <Label text="Name" />
+                            <Text text="{emergencyContact>/items/0/ContactName}" />
+                            <Label text="Relationship" />
+                            <Text text="{emergencyContact>/items/0/Relationship}" />
+                            <Label text="Phone" />
+                            <Text text="{emergencyContact>/items/0/ContactPhone}" />
+                            <Label text="Email" />
+                            <Text text="{emergencyContact>/items/0/ContactEmail}" />
+                        </form:SimpleForm>
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
             </objectPage:ObjectPageSection>
+
             <!-- Leave Summary -->
             <objectPage:ObjectPageSection title="Leave Summary">
                 <objectPage:subSections>
                     <objectPage:ObjectPageSubSection>
-                        <VBox>
-                            <Text text="Total Leaves: {leaveSummary>/items/0/TotalLeaves}" />
-                            <Text text="Used Leaves: {leaveSummary>/items/0/LeavesUsed}" />
-                            <Text text="Leave Balance: {leaveSummary>/items/0/LeaveBalance}" />
-                        </VBox>
+                        <form:SimpleForm
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            class="sapUiSmallMarginBottom">
+                            <Label text="Total Leaves" />
+                            <Text text="{leaveSummary>/items/0/TotalLeaves}" />
+                            <Label text="Used Leaves" />
+                            <Text text="{leaveSummary>/items/0/LeavesUsed}" />
+                            <Label text="Leave Balance" />
+                            <Text text="{leaveSummary>/items/0/LeaveBalance}" />
+                        </form:SimpleForm>
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
             </objectPage:ObjectPageSection>
-            <!-- Leave Logs -->
+
+            <!-- Leave Logs  -->
             <objectPage:ObjectPageSection title="Leave Logs">
                 <objectPage:subSections>
                     <objectPage:ObjectPageSubSection>
@@ -97,10 +131,12 @@
                                 <ColumnListItem>
                                     <cells>
                                         <Text text="{leaveLogs>LeaveType}" />
-                                        <Text text="{path: 'LeaveStartDate', formatter: '.formatDate'}"/>
-                                        <Text text="{path: 'LeaveEndDate', formatter: '.formatDate'}"/>
+                                        <Text text="{parts: [{path: 'leaveLogs>LeaveStartDate'}], formatter: '.formatDate'}" />
+                                        <Text text="{parts: [{path: 'leaveLogs>LeaveEndDate'}], formatter: '.formatDate'}" />
                                         <Text text="{leaveLogs>Reason}" />
-                                        <ObjectStatus text="{leaveLogs>Status}" state="{path: 'Status',formatter: '.formatStatus'}"/>
+                                        <ObjectStatus 
+                                            text="{leaveLogs>Status}" 
+                                            state="{parts: [{path: 'leaveLogs>Status'}], formatter: '.formatStatus'}" />
                                     </cells>
                                 </ColumnListItem>
                             </items>
@@ -108,6 +144,7 @@
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
             </objectPage:ObjectPageSection>
+
             <!-- Payslips -->
             <objectPage:ObjectPageSection title="Payslips">
                 <objectPage:subSections>
@@ -123,7 +160,7 @@
                             <items>
                                 <ColumnListItem>
                                     <cells>
-                                        <Text text="{payslips>PayDate}" />
+                                        <Text text="{parts: [{path: 'payslips>PayDate'}], formatter: '.formatDate'}" />
                                         <Text text="{payslips>BasicPay}" />
                                         <Text text="{payslips>Deductions}" />
                                         <Text text="{payslips>NetPay}" />

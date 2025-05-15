@@ -23,17 +23,9 @@ sap.ui.define([
                     var employee = oData.results.find(emp => emp.ID === employeeId);
                     if (employee) {
                         this.getView().setModel(new JSONModel({items: employee}), "employeeDetails");
-
-                        // Load Emergency Contact
                         this._loadEmergencyContact(employeeId);
-
-                        // Load Leave Summary
                         this._loadLeaveSummary(employeeId);
-
-                        // Load Leave Logs
                         this._loadLeaveLogs(employeeId);
-
-                        // Load Payslips
                         this._loadPayslips(employeeId);
                     }
                 }.bind(this),
@@ -42,13 +34,11 @@ sap.ui.define([
                 }
             });
         },
-
         _loadEmergencyContact: function (employeeId) {
             var oModel = this.getOwnerComponent().getModel();
             oModel.read("/EmployeeInfoEmergencyContact", {
                 filters: [new Filter("EmployeeID", FilterOperator.EQ, employeeId)],
                 success: function (oData) {
-                    // var contact = oData.results && oData.results[0];
                     this.getView().setModel(new JSONModel({items: oData.results}), "emergencyContact");
                 }.bind(this),
                 error: function (err) {
@@ -56,7 +46,6 @@ sap.ui.define([
                 }
             });
         },
-
         _loadLeaveSummary: function (employeeId) {
             var oModel = this.getOwnerComponent().getModel();
             oModel.read("/EmployeeLeaveSet", {
@@ -69,7 +58,6 @@ sap.ui.define([
                 }
             });
         },
-
         _loadLeaveLogs: function (employeeId) {
             var oModel = this.getOwnerComponent().getModel();
             oModel.read("/EmployeeLeaveLog", {
@@ -82,7 +70,6 @@ sap.ui.define([
                 }
             });
         },
-
         _loadPayslips: function (employeeId) {
             var oModel = this.getOwnerComponent().getModel();
             oModel.read("/EmployeePayslips", {
@@ -95,7 +82,6 @@ sap.ui.define([
                 }
             });
         },
-
         formatDate: function (sDate) {
             if (sDate) {
                 var oDate = new Date(sDate);
@@ -104,7 +90,6 @@ sap.ui.define([
             }
             return "";
         },
-
         formatStatus: function(status) { 
             switch (status) { 
                 case "Approved": 

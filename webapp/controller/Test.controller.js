@@ -36,17 +36,14 @@
                 case "All":
                     aFilters = [];
                     break;
-                case "0-10000":
-                    aFilters.push(new Filter("Salary", FilterOperator.BT, 0, 10000));
+                case "0-50000":
+                    aFilters.push(new Filter("Salary", FilterOperator.BT, 0, 50000));
                     break;
-                case "10000-15000":
-                    aFilters.push(new Filter("Salary", FilterOperator.BT, 10000, 15000));
+                case "60000-90000":
+                    aFilters.push(new Filter("Salary", FilterOperator.BT, 60000, 90000));
                     break;
-                case "15000-20000":
-                    aFilters.push(new Filter("Salary", FilterOperator.BT, 15000, 20000));
-                    break;
-                case "20000":
-                    aFilters.push(new Filter("Salary", FilterOperator.GT, 20000));
+                case "100000":
+                    aFilters.push(new Filter("Salary", FilterOperator.EQ, 100000));
                     break; 
                 default:
                     break;

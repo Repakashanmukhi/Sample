@@ -15,10 +15,9 @@
             <Select id="salaryRange" change="onSalary">
                 <items>
                     <core:Item key="All" text="All"/>
-                    <core:Item key="0-10000" text="0 - 10,000" />
-                    <core:Item key="10000-15000" text="10,000-15,000" />
-                    <core:Item key="15000-20000" text="15,000-20,000" />
-                    <core:Item key="20000" text="20,000+" />
+                    <core:Item key="0-50000" text="0 - 50,000" />
+                    <core:Item key="60000-90000" text="60,000-90,000" />
+                    <core:Item key="100000" text="1,00,000" />
                 </items>
             </Select>
             <Label text="Employee Department" class="sapUiTinyMargin"/>
@@ -49,7 +48,7 @@
         <Input id="input2" placeholder="Enter Input 2" liveChange="onInputChange" type="Number" />
         <Label text="Input 3" />
         <Input id="input3" placeholder="Enter Input 3" liveChange="onInputChange" type="Number" />
-        </VBox> -->
+        </VBox>  -->
     </Page>
 </mvc:View>
 
