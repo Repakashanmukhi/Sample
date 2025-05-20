@@ -80,7 +80,6 @@
                         LeaveCount: oLeaveCount[empId]
                         });
                     }
-
                     var JSONModel = new sap.ui.model.json.JSONModel({leaves: aLeaveCountArray});
                     that.create.setModel(JSONModel);
                 }
@@ -131,7 +130,6 @@
             }
             oBinding.filter(aFilters);
         },
-        
         onCloseDialog:function(){
             that.Department.close();
         },
@@ -146,7 +144,6 @@
         }  
     }); 
 });
-
         // onInputChange: function (oEvent) {
         //     var oInput = oEvent.getSource();
         //     var sId = oEvent.getSource().getId();

@@ -6,12 +6,10 @@
     xmlns:layout="sap.ui.layout"
     xmlns:form="sap.ui.layout.form"
     xmlns:objectPage="sap.uxap">
-
     <objectPage:ObjectPageLayout
         id="employeePage"
         showTitleInHeaderContent="true"
         alwaysShowContentHeader="true">
-
         <!-- Header Title -->
         <objectPage:headerTitle>
             <objectPage:ObjectPageDynamicHeaderTitle>
@@ -55,7 +53,6 @@
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
             </objectPage:ObjectPageSection>
-
             <!-- Job Info -->
             <objectPage:ObjectPageSection title="Job Details">
                 <objectPage:subSections>
@@ -74,28 +71,36 @@
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
             </objectPage:ObjectPageSection>
-
             <!-- Emergency Contact -->
             <objectPage:ObjectPageSection title="Emergency Contact">
                 <objectPage:subSections>
                     <objectPage:ObjectPageSubSection>
-                        <form:SimpleForm
-                            editable="false"
-                            layout="ResponsiveGridLayout"
-                            class="sapUiSmallMarginBottom">
-                            <Label text="Name" />
-                            <Text text="{emergencyContact>/items/0/ContactName}" />
-                            <Label text="Relationship" />
-                            <Text text="{emergencyContact>/items/0/Relationship}" />
-                            <Label text="Phone" />
-                            <Text text="{emergencyContact>/items/0/ContactPhone}" />
-                            <Label text="Email" />
-                            <Text text="{emergencyContact>/items/0/ContactEmail}" />
-                        </form:SimpleForm>
+                        <HBox
+                        items="{emergencyContact>/items}"
+                        wrap="Wrap"
+                        justifyContent="Start"
+                        class="sapUiSmallMarginTop sapUiMediumPaddingBeginEnd">
+                            <items>
+                                <VBox class="sapUiSmallMargin sapUiContentPadding sapUiResponsiveMargin" width="250px">
+                                    <form:SimpleForm
+                                    editable="false"
+                                    layout="ResponsiveGridLayout"
+                                    class="sapUiSmallMarginBottom">
+                                        <Label text="Name" />
+                                        <Text text="{emergencyContact>ContactName}" />
+                                        <Label text="Relationship" />
+                                        <Text text="{emergencyContact>Relationship}" />
+                                        <Label text="Phone" />
+                                        <Text text="{emergencyContact>ContactPhone}" />
+                                        <Label text="Email" />
+                                        <Text text="{emergencyContact>ContactEmail}" />
+                                    </form:SimpleForm>
+                                </VBox>
+                            </items>
+                        </HBox>
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
             </objectPage:ObjectPageSection>
-
             <!-- Leave Summary -->
             <objectPage:ObjectPageSection title="Leave Summary">
                 <objectPage:subSections>
@@ -114,7 +119,6 @@
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
             </objectPage:ObjectPageSection>
-
             <!-- Leave Logs  -->
             <objectPage:ObjectPageSection title="Leave Logs">
                 <objectPage:subSections>
@@ -144,7 +148,6 @@
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
             </objectPage:ObjectPageSection>
-
             <!-- Payslips -->
             <objectPage:ObjectPageSection title="Payslips">
                 <objectPage:subSections>
