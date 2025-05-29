@@ -88,7 +88,6 @@ sap.ui.define([
                 var oFormatter = DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
                 return oFormatter.format(oDate);
             }
-            return "";
         },
         formatStatus: function(status) { 
             switch (status) { 
