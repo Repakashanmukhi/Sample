@@ -17,8 +17,12 @@
                     <Title text="{employeeDetails>FirstName} {employeeDetails>LastName}" level="H1" />
                 </objectPage:heading>
                 <objectPage:expandedContent>
-                    <ObjectStatus text="Employee Details" state="Success" />
+                    <Button icon="sap-icon://nav-back" press="onNavBack" class="sapUiTinyMarginEnd" type="Transparent" ></Button>
+                    <ObjectStatus text="Employee Details" state="Success"/>
                 </objectPage:expandedContent>
+                <objectPage:actions>
+                
+                </objectPage:actions>
             </objectPage:ObjectPageDynamicHeaderTitle>
         </objectPage:headerTitle>
         <!-- Header Content-->
