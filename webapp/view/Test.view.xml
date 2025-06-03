@@ -31,15 +31,13 @@
             <Button text="Employee Leave logs" press="onLeave" class="sapUiTinyMargin"></Button>
         </HBox>
     <List id="employeeList" items="{/event}" itemPress="onNavigation">
-    <items>
-        <StandardListItem 
-            title="{FirstName} {LastName}" 
-            description="{Email}" 
-            info="{ID}"
-            type="Active">
-        </StandardListItem>
-    </items>
-    </List>
+    <StandardListItem 
+    title="{FirstName} {LastName}" 
+    description="{Email}" 
+    info="{ID}"
+    type="Active">
+    </StandardListItem>
+</List>
 
     <!-- <VBox class="sapUiSmallMargin">
         <Label text="Input 1" />

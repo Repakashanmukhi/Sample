@@ -18,10 +18,9 @@
                 </objectPage:heading>
                 <objectPage:expandedContent>
                     <Button icon="sap-icon://nav-back" press="onNavBack" class="sapUiTinyMarginEnd" type="Transparent" ></Button>
-                    <ObjectStatus text="Employee Details" state="Success"/>
+                    <ObjectStatus text="Employee Details"/>
                 </objectPage:expandedContent>
                 <objectPage:actions>
-                
                 </objectPage:actions>
             </objectPage:ObjectPageDynamicHeaderTitle>
         </objectPage:headerTitle>
@@ -142,9 +141,10 @@
                                         <Text text="{parts: [{path: 'leaveLogs>LeaveStartDate'}], formatter: '.formatDate'}" />
                                         <Text text="{parts: [{path: 'leaveLogs>LeaveEndDate'}], formatter: '.formatDate'}" />
                                         <Text text="{leaveLogs>Reason}" />
-                                        <ObjectStatus 
+                                        <GenericTag 
                                             text="{leaveLogs>Status}" 
-                                            state="{parts: [{path: 'leaveLogs>Status'}], formatter: '.formatStatus'}" />
+                                            status="{parts: [{path: 'leaveLogs>Status'}], formatter: '.formatStatus'}" 
+                                            class="sapUiTinyMargin" />
                                     </cells>
                                 </ColumnListItem>
                             </items>
