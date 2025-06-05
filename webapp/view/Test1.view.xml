@@ -141,7 +141,7 @@
                                         <Text text="{parts: [{path: 'leaveLogs>LeaveStartDate'}], formatter: '.formatDate'}" />
                                         <Text text="{parts: [{path: 'leaveLogs>LeaveEndDate'}], formatter: '.formatDate'}" />
                                         <Text text="{leaveLogs>Reason}" />
-                                        <GenericTag 
+                                        <GenericTag
                                             text="{leaveLogs>Status}" 
                                             status="{parts: [{path: 'leaveLogs>Status'}], formatter: '.formatStatus'}" 
                                             class="sapUiTinyMargin" />
@@ -178,7 +178,7 @@
                         </Table>
                     </objectPage:ObjectPageSubSection>
                 </objectPage:subSections>
-            </objectPage:ObjectPageSection>
+            </objectPage:ObjectPageSection> 
         </objectPage:sections>
     </objectPage:ObjectPageLayout>
 </mvc:View>
